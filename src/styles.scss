@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.hidden {
+  display: none;
+}
+
+.cardview {
+  max-width: 1280px;
+  margin: 0 auto;
+
+  &__list {
+    padding: 0;
+  }
+}
+
+.card {
+  cursor: pointer;
+  
+  &__image {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (min-device-width: 768px) {
+  .cardview {
+    &__list {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+
+  .card {
+    flex: 0 0 22.5%;
+    margin-bottom: 30px;
+  }
+} 

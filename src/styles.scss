@@ -15,10 +15,9 @@ a {
 }
 
 .cardview {
-  max-width: 1280px;
-  margin: 0 auto;
 
   &__list {
+    background-color: black;
     padding: 0;
   }
 }
@@ -29,20 +28,39 @@ a {
   &__image {
     max-width: 100%;
   }
+
+  &__description,
+  &__credit {
+      display: none;
+  }
 }
 
 @media only screen and (min-device-width: 768px) {
   .cardview {
+
     &__list {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+        display: -ms-flexbox;
+        -ms-flex-direction: column;
+        -ms-flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 100vw;
+        width: 100%;
+
+      &:hover .card {
+	    opacity: 0.3;
+      }
+
+      &:hover .card:hover {
+        opacity: 1;
+      }
     }
   }
 
   .card {
-    flex: 0 0 22.5%;
-    margin-bottom: 30px;
+    width: 33.3%;
+    transition: .5s opacity;
   }
 } 
+

@@ -1,7 +1,9 @@
 * {
     box-sizing: border-box;
 }
+
 body {
+  background-color: #f6f6f3;
   font-family: sans-serif;
 }
 
@@ -10,16 +12,57 @@ a {
   color: inherit;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .hidden {
   display: none;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 110px;
+  padding: 0 2rem;
+
+  &__branding {
+    color: #277f86;
+    font-size: 2.25rem;
+  }
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  flex: 0 0 60%;
+  padding-top: .75rem;
+
+  &__item {
+    &::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 0;
+      background-color: #277f86;
+      transition: width .3s linear;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
 .cardview {
-    // max-width: 1600px;
-    // margin: 0 auto;
+    max-width: 1600px;
+    margin: 0 auto;
 
   &__list {
-    background-color: black;
+    width: 100%;
   }
 }
 
@@ -32,18 +75,9 @@ a {
   }
 }
 
-.grid {
-    /* clear fix */
-    &:after {
-    content: '';
-    display: block;
-    clear: both;
-    }
-}
-
 .grid-sizer,
 .grid-item {
-  width: 33.333%;
+  width: 50%;
 }
 
 .grid-item {
@@ -57,6 +91,16 @@ a {
 }
 
 @media only screen and (min-device-width: 768px) {
-  
+    .grid-sizer,
+    .grid-item {
+        width: 33.333%;
+    }
 } 
+
+@media only screen and (min-device-width: 1680px) {
+    .grid-sizer,
+    .grid-item {
+        width: 25%;
+    }
+}
 

@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.5",
+    "imagesloaded": "^4.1.4",
+    "masonry-layout": "^4.2.2",
     "normalize.css": "^8.0.1"
   },
   "devDependencies": {

@@ -1,11 +1,13 @@
 import 'normalize.css';
 import "./styles.scss";
+import Masonry from 'masonry-layout';
+import imagesLoaded from 'imagesloaded';
 
 const url =
-  "https://api.unsplash.com/search/photos?client_id=NS13mj0sVH6N_4Kr1aqWk8HGMKURbwFwqL3zMn3R0Wk&per_page=20&query=europe";
+  "https://api.unsplash.com/search/photos?client_id=NS13mj0sVH6N_4Kr1aqWk8HGMKURbwFwqL3zMn3R0Wk&per_page=80&query=europe";
 
 const createCard = ({ imageUrl, description, credit }) => `
-  <a class="card" href="${imageUrl}">
+  <a class="card grid-item" href="${imageUrl}">
       <img
       class="card__image"
       src="${imageUrl}"
@@ -38,6 +40,21 @@ async function getPhotos() {
   } catch (error) {
     console.log(error);
   }
+  initializeMasonry();
+}
+
+function initializeMasonry() {
+    const grid = document.querySelector('.grid');
+    const msnry = new Masonry( grid, {
+        itemSelector: '.grid-item',
+        columnWidth: '.grid-sizer',
+        percentPosition: true
+    });
+
+    imagesLoaded( grid ).on( 'progress', function() {
+    // layout Masonry after each image loads
+    msnry.layout();
+    });
 }
 
 getPhotos();

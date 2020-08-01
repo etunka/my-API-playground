@@ -15,19 +15,16 @@ a {
 }
 
 .cardview {
+    // max-width: 1600px;
+    // margin: 0 auto;
 
   &__list {
     background-color: black;
-    padding: 0;
   }
 }
 
 .card {
   cursor: pointer;
-  
-  &__image {
-    max-width: 100%;
-  }
 
   &__description,
   &__credit {
@@ -35,32 +32,31 @@ a {
   }
 }
 
-@media only screen and (min-device-width: 768px) {
-  .cardview {
-
-    &__list {
-        display: -ms-flexbox;
-        -ms-flex-direction: column;
-        -ms-flex-wrap: wrap;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        height: 100vw;
-        width: 100%;
-
-      &:hover .card {
-	    opacity: 0.3;
-      }
-
-      &:hover .card:hover {
-        opacity: 1;
-      }
+.grid {
+    /* clear fix */
+    &:after {
+    content: '';
+    display: block;
+    clear: both;
     }
-  }
+}
 
-  .card {
-    width: 33.3%;
-    transition: .5s opacity;
-  }
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  float: left;
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+@media only screen and (min-device-width: 768px) {
+  
 } 
 

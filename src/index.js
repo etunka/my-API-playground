@@ -3,11 +3,17 @@ import "./styles.scss";
 import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 
-// TO DO: INFINITE LOAD
+const appState = {
+  currentPage: 1
+}
+
+const places = "https://maps.googleapis.com/maps/api/place/photo?parameters"
 
 const url =
-  "https://api.unsplash.com/search/photos?client_id=NS13mj0sVH6N_4Kr1aqWk8HGMKURbwFwqL3zMn3R0Wk&per_page=20&query=europe";
+  "https://api.unsplash.com/search/photos?client_id=NS13mj0sVH6N_4Kr1aqWk8HGMKURbwFwqL3zMn3R0Wk&query=europe%20travel";
+const loader = document.querySelector('#loader-img');
 
+const createUrl = ({page}) => `${url}&page=${page}`
 const createCard = ({ imageUrl, description, credit }) => `
   <a class="card grid-item" href="${imageUrl}">
       <img
@@ -22,8 +28,9 @@ const createCard = ({ imageUrl, description, credit }) => `
   `;
 
 async function getPhotos() {
+  loader.style.display = "block";
   try {
-    const response = await fetch(url);
+    const response = await fetch(createUrl({page: appState.currentPage}));
     const data = await response.json();
     data.results
       .filter(el => el.description || el.alt_description)
@@ -39,6 +46,7 @@ async function getPhotos() {
         const card = document.createRange().createContextualFragment(cardContent);
         document.querySelector(".cardview__list").appendChild(card);
       });
+      loader.style.display = "none";
   } catch (error) {
     console.log(error);
   }
@@ -50,7 +58,8 @@ function initializeMasonry() {
     const msnry = new Masonry( grid, {
         itemSelector: '.grid-item',
         columnWidth: '.grid-sizer',
-        percentPosition: true
+        percentPosition: true,
+        gutter: 10
     });
 
     imagesLoaded( grid ).on( 'progress', function() {
@@ -58,5 +67,12 @@ function initializeMasonry() {
     msnry.layout();
     });
 }
+
+window.addEventListener('scroll', function() {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+    appState.currentPage++;
+    getPhotos();
+  }
+});
 
 getPhotos();

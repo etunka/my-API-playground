@@ -8,22 +8,27 @@
   <body>
     <div id="app">
       <div class="header">
-        <h1 class="header__branding"><a href="/">Random Places</a></h1>
-        <ul class="nav">
-          <li class="nav__item"><a href="#">Europe</a></li>
-          <li class="nav__item"><a href="#">Asia</a></li>
-          <li class="nav__item"><a href="#">Africa</a></li>
-          <li class="nav__item"><a href="#">North America</a></li>
-          <li class="nav__item"><a href="#">South America</a></li>
-          <li class="nav__item"><a href="#">Australia</a></li>
-          <li class="nav__item"><a href="#">Antarctica</a></li>
-        </ul>
+        <h1 class="header__branding"><a href="/">Random Places from Europe</a></h1>
+        <div class="nav">
+          <a href="#" class="nav__link">
+            <span>Countries</span>
+            <img src="src/arrow-down.svg" alt="">
+          </a>
+          <ul class="nav__list">
+            {# Countries will be listed #}
+            <li class="nav__item"><a href="#"></a></li>
+          </ul>
+        </div>
+        
       </div>
       <div id="cardview" class="cardview">
         <div class="cardview__list grid">
             <div class="grid-sizer"></div>
         </div>
       </div>
+      <img id="loader-img"
+    		  src="http://cdn.lowgif.com/small/fa817c5f2e1b0737-animated-loading-gif-transparent-background-11-gif.gif"  
+    		/>
     </div>
 
     <script src="src/index.js"></script>

@@ -21,39 +21,58 @@ ul {
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 110px;
-  padding: 0 2rem;
+  text-align: center;
+  padding: 2rem 0;
 
   &__branding {
     color: #277f86;
-    font-size: 2.25rem;
+    font-size: 2.5rem;
   }
 }
 
 .nav {
-  display: flex;
-  justify-content: space-between;
-  flex: 0 0 60%;
-  padding-top: .75rem;
+  position: relative;
+  max-width: 200px;
+  margin: 0 auto;
 
-  &__item {
-    &::after {
-      content: '';
-      display: block;
-      height: 1px;
-      width: 0;
-      background-color: #277f86;
-      transition: width .3s linear;
+  &__link {
+    display: inline-block;
+    font-size: 1.25rem;
+    color: #3c3a3a;
+    margin-top: .5rem;
+    transition: color .2s ease;
+
+    img {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      top: 13px;
+      margin-left: .5rem;
     }
 
     &:hover {
-      &::after {
-        width: 100%;
-      }
+      color: #277f86;
     }
+  }
+
+  &__list {
+    visibility: hidden;
+    position: absolute;
+    top: 1.25rem;
+    right: -12rem;
+    background-color: #f6f6f3;
+    border: 1px solid transparentize(#277f86, .5);
+    z-index: 10;
+    width: 550px;
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  &__item {
+    text-align: left;
   }
 }
 
@@ -63,6 +82,7 @@ ul {
 
   &__list {
     width: 100%;
+    margin-left: 10px;
   }
 }
 
@@ -82,6 +102,7 @@ ul {
 
 .grid-item {
   float: left;
+  margin-bottom: 10px;
 }
 
 .grid-item img {
@@ -93,7 +114,7 @@ ul {
 @media only screen and (min-device-width: 768px) {
     .grid-sizer,
     .grid-item {
-        width: 33.333%;
+        width: 32.5%;
     }
 } 
 
@@ -102,5 +123,13 @@ ul {
     .grid-item {
         width: 25%;
     }
+}
+
+#loader-img {
+	display: none;
+    position: fixed;
+    bottom: 3vh;
+    left: calc(50vw - 75px);
+    width: 150px;
 }
 

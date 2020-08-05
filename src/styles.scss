@@ -48,10 +48,17 @@ ul {
       position: absolute;
       top: 13px;
       margin-left: .5rem;
+      transition: transform .2s ease;
     }
 
     &:hover {
       color: #277f86;
+    }
+
+    &.is-active {
+      img {
+        transform: rotate(180deg);
+      }
     }
   }
 
@@ -69,6 +76,10 @@ ul {
     flex-wrap: wrap;
     flex-direction: column;
     padding: 0;
+
+    &.is-active {
+      visibility: visible;
+    }
   }
 
   &__item {

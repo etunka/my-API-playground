@@ -9,12 +9,19 @@ const appState = {
 
 const navLink = document.querySelector(".nav__link");
 const navList = document.querySelector(".nav__list");
+const navItems = ()=> document.querySelectorAll(".nav__item");
 const loader = document.querySelector('#loader-img');
 
 
+// TODO:
+// when clicked on country, url should change to have country parameter like=> localhost:1234/?country=Italy
+// call unsplash api with value from country parameter
+// it should check if value in country parameter is valid (exists in the countries list)
+// so ?country=Balballand shouldn't work and show some error or redirect to homepage
+
 const url =
   "https://api.unsplash.com/search/photos?client_id=NS13mj0sVH6N_4Kr1aqWk8HGMKURbwFwqL3zMn3R0Wk&query=europe%20travel";
-const countriesUrl = "https://restcountries.eu/rest/v2/regionalbloc/eu";
+const countriesUrl = "https://run.mocky.io/v3/8e202a27-21a6-4e16-9300-1cf7c848dde7";
 
 
 const createUrl = ({page}) => `${url}&page=${page}`
@@ -33,6 +40,11 @@ const createCard = ({ imageUrl, description, credit }) => `
 const createCountry = (countryName) => `
   <li class="nav__item">${countryName}</li>
 `;
+
+function init() {
+  getCountries(); 
+  getPhotos();
+}
 
 async function getPhotos() {
   loader.style.display = "block";
@@ -59,24 +71,34 @@ async function getPhotos() {
     console.log(error);
   }
   initializeMasonry();
-  getCountries(); 
 }
 
 async function getCountries() {
   try{
     const response = await fetch(countriesUrl);
     const data =  await response.json();
-    data
-    .map(el =>
-        createCountry(el.name)
-      )
+    data.countries
+    .map(el => createCountry(el))
     .forEach(countryContent => {
       const country = document.createRange().createContextualFragment(countryContent);
       document.querySelector('.nav__list').appendChild(country);
     });
+
+    // convert NodeList to array
+    [...navItems()].forEach((country)=>{
+      country.addEventListener('click', () => {
+        let currentUrl = window.location.href;
+        console.log(currentUrl);
+      });
+    });
+    
   } catch (error) {
     console.log(error);
   }
+}
+
+function filterByCountry() {
+ console.log('country picked');
 }
 
 function initializeMasonry() {
@@ -120,4 +142,6 @@ window.addEventListener('click', (event) => {
 });
 
 
-getPhotos();
+init();
+
+

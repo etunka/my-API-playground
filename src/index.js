@@ -4,17 +4,18 @@ import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 
 const appState = {
-  currentPage: 1
+  currentPage: 1,
+  currentSlug: window.location.pathname.split('/').pop()
 };
 
 const navLink = document.querySelector(".nav__link");
 const navList = document.querySelector(".nav__list");
 const navItems = ()=> document.querySelectorAll(".nav__item");
 const loader = document.querySelector('#loader-img');
+const baseUrl = window.location.origin + window.location.pathname;
 
 
 // TODO:
-// when clicked on country, url should change to have country parameter like=> localhost:1234/?country=Italy
 // call unsplash api with value from country parameter
 // it should check if value in country parameter is valid (exists in the countries list)
 // so ?country=Balballand shouldn't work and show some error or redirect to homepage
@@ -87,8 +88,9 @@ async function getCountries() {
     // convert NodeList to array
     [...navItems()].forEach((country)=>{
       country.addEventListener('click', () => {
-        let currentUrl = window.location.href;
-        console.log(currentUrl);
+        appState.currentSlug = '';
+        appState.currentSlug += country.innerHTML;
+        window.location.href = baseUrl + '#' + appState.currentSlug;
       });
     });
     

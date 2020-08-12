@@ -97,10 +97,6 @@ async function getCountries() {
   }
 }
 
-function filterByCountry() {
- console.log('country picked');
-}
-
 function initializeMasonry() {
     const grid = document.querySelector('.grid');
     const msnry = new Masonry( grid, {

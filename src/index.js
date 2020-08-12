@@ -5,27 +5,29 @@ import imagesLoaded from 'imagesloaded';
 
 const appState = {
   currentPage: 1,
-  currentSlug: window.location.pathname.split('/').pop()
+  currentQuery: `query=europe+travel`,
+  currentSlug: window.location.pathname.split('/').pop(),
 };
 
 const navLink = document.querySelector(".nav__link");
 const navList = document.querySelector(".nav__list");
 const navItems = ()=> document.querySelectorAll(".nav__item");
+const cardContainer = document.querySelector(".cardview__list");
 const loader = document.querySelector('#loader-img');
 const baseUrl = window.location.origin + window.location.pathname;
 
 
 // TODO:
-// call unsplash api with value from country parameter
 // it should check if value in country parameter is valid (exists in the countries list)
 // so ?country=Balballand shouldn't work and show some error or redirect to homepage
+// check if you can get more relevant photos from API
+// styling
+// refactor code/build components
 
 const url =
-  "https://api.unsplash.com/search/photos?client_id=NS13mj0sVH6N_4Kr1aqWk8HGMKURbwFwqL3zMn3R0Wk&query=europe%20travel";
+  "https://api.unsplash.com/search/photos?client_id=NS13mj0sVH6N_4Kr1aqWk8HGMKURbwFwqL3zMn3R0Wk";
 const countriesUrl = "https://run.mocky.io/v3/8e202a27-21a6-4e16-9300-1cf7c848dde7";
-
-
-const createUrl = ({page}) => `${url}&page=${page}`
+const createUrl = ({page, query}) => `${url}&query=${query}&page=${page}`;
 const createCard = ({ imageUrl, description, credit }) => `
   <a class="card grid-item" href="${imageUrl}">
       <img
@@ -48,9 +50,10 @@ function init() {
 }
 
 async function getPhotos() {
+  // Todo: refactor the loader code
   loader.style.display = "block";
   try {
-    const response = await fetch(createUrl({page: appState.currentPage}));
+    const response = await fetch(createUrl({page: appState.currentPage, query: appState.currentQuery}));
     const data = await response.json();
     data.results
       // get only those with description
@@ -65,7 +68,7 @@ async function getPhotos() {
       .forEach(cardContent => {
         // found it here: https://davidwalsh.name/convert-html-stings-dom-nodes
         const card = document.createRange().createContextualFragment(cardContent);
-        document.querySelector(".cardview__list").appendChild(card);
+        cardContainer.appendChild(card);
       });
       loader.style.display = "none";
   } catch (error) {
@@ -88,9 +91,15 @@ async function getCountries() {
     // convert NodeList to array
     [...navItems()].forEach((country)=>{
       country.addEventListener('click', () => {
-        appState.currentSlug = '';
-        appState.currentSlug += country.innerHTML;
-        window.location.href = baseUrl + '#' + appState.currentSlug;
+        let countrySlug = appState.currentSlug;
+        countrySlug = '';
+        countrySlug += country.innerHTML;
+        window.location.href = baseUrl + '#' + countrySlug;
+        appState.currentQuery = '';
+        appState.currentQuery = `query=${countrySlug}`;
+        document.querySelectorAll(".cardview__list .card")
+        .forEach(card => {cardContainer.removeChild(card);});
+        getPhotos();
       });
     });
     
